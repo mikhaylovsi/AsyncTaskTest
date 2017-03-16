@@ -45,9 +45,18 @@ public class MainActivity extends AppCompatActivity {
             case R.id.get:
                 showResult();
                 break;
+            case R.id.cancel:
+               cancelTask();
             default:
                 break;
         }
+
+    }
+
+    private void cancelTask() {
+
+        if(mt == null) return;
+        Log.d(LOG_TAG, "cancel result: " + mt.cancel(true));
 
     }
 
@@ -89,14 +98,26 @@ public class MainActivity extends AppCompatActivity {
                 for (String x : params){
                     Thread.sleep(1000);
                     publishProgress(++i);
+                    Log.d(LOG_TAG, "isCancelled: " + isCancelled());
+
+                    if(isCancelled()) {
+                        return -1;
+                    }
                 }
                 Thread.sleep(1000);
                 return i;
             } catch (InterruptedException e) {
+                Log.d(LOG_TAG, "Interrupted");
                 e.printStackTrace();
             }
 
             return -1;
+        }
+
+        @Override
+        protected void onCancelled() {
+            tvStatus.setText("Cancel");
+            Log.d(LOG_TAG, "Cancel");
         }
 
         @Override
