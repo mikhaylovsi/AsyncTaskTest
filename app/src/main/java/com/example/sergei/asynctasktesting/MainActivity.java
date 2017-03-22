@@ -22,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
     MyTask mt;
     TextView tvStatus;
+    TextView procStatus;
 
 
     @Override
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         tvStatus = (TextView)findViewById(R.id.status);
+        procStatus = (TextView)findViewById(R.id.status_process);
 
 
     }
@@ -47,10 +49,19 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.cancel:
                cancelTask();
+            case R.id.statusBtn:
+                showStatus();
+                break;
             default:
                 break;
         }
 
+    }
+
+    private void showStatus() {
+        if(mt != null){
+            Toast.makeText(this, mt.getStatus().toString(), Toast.LENGTH_LONG).show();
+        }
     }
 
     private void cancelTask() {
